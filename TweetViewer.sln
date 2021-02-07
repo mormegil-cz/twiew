@@ -1,0 +1,21 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetViewer", "TweetViewer.Web\TweetViewer.csproj", "{F922E885-616C-4396-9BFA-C70178B8B3B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetViewer.Tests", "TweetViewer.Tests\TweetViewer.Tests.csproj", "{9FD5D7C2-FDE3-4247-B972-0372CDA7FD36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F922E885-616C-4396-9BFA-C70178B8B3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F922E885-616C-4396-9BFA-C70178B8B3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F922E885-616C-4396-9BFA-C70178B8B3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F922E885-616C-4396-9BFA-C70178B8B3B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FD5D7C2-FDE3-4247-B972-0372CDA7FD36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FD5D7C2-FDE3-4247-B972-0372CDA7FD36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FD5D7C2-FDE3-4247-B972-0372CDA7FD36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FD5D7C2-FDE3-4247-B972-0372CDA7FD36}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,107 @@
+@using Tweetinvi.Models.Entities
+@model Tweet
+
+@{
+    ViewBag.Title = "Tweet by " + Model.Data.CreatedBy.ScreenName;
+    Layout = "_Layout";
+}
+
+<h2>Tweet by @Model.Data.CreatedBy.ScreenName</h2>
+
+@if (Model.Data.InReplyToStatusId != null)
+{
+    <div class="reply-indicator">
+        ⤶ <a href="@Model.Data.InReplyToStatusIdStr">@Model.Data.InReplyToScreenName</a>
+    </div>
+}
+@if (Model.Data.RetweetedTweet != null)
+{
+    <div class="retweet-indicator">
+        ⇆ <a href="@Model.Data.RetweetedTweet.Id">@Model.Data.RetweetedTweet.CreatedBy.ScreenName</a>
+    </div>
+}
+@if (Model.Data.QuotedTweet != null)
+{
+    <div class="quote-indicator">
+        🗩 <a href="@Model.Data.QuotedTweet.Id">@Model.Data.QuotedTweet.CreatedBy.ScreenName</a>
+    </div>
+}
+<p class="tweet" lang="@Model.LanguageCode">
+    @foreach (var piece in Model.TextToDisplay)
+    {
+        switch (piece.Type)
+        {
+            case PieceType.Text:
+                <span class="piece-text">@piece.DecodedText</span>
+                break;
+            case PieceType.Hashtag:
+                <a class="piece-hashtag" href="https://twitter.com/hashtag/@(piece.Text.Substring(1))">@piece.Text</a>
+                break;
+            case PieceType.Mention:
+                var mentionPiece = (TextPiece<IUserMentionEntity>) piece;
+                <a class="piece-mention" href="https://twitter.com/@(mentionPiece.AdditionalData!.ScreenName)">@piece.Text</a>
+                break;
+            case PieceType.Url:
+                var urlPiece = (TextPiece<IUrlEntity>) piece;
+                <a class="piece-url" href="@urlPiece.AdditionalData!.ExpandedURL">@urlPiece.AdditionalData.DisplayedURL</a>
+                break;
+            case PieceType.Media:
+                // ignored, shown below
+                break;
+            default:
+                throw new NotImplementedException(piece.Type.ToString());
+        }
+    }
+</p>
+
+<div class="interaction-stats">
+    @if (Model.Data.FavoriteCount > 0)
+    {
+        <span class="badge badge-pill badge-secondary">♥ @Model.Data.FavoriteCount</span>
+    }
+    @if (Model.Data.RetweetCount > 0)
+    {
+        <span class="badge badge-pill badge-secondary">⇆ @Model.Data.RetweetCount</span>
+    }
+    @if (Model.Data.ReplyCount > 0)
+    {
+        <span class="badge badge-pill badge-secondary">⤶ @Model.Data.ReplyCount</span>
+    }
+    @if (Model.Data.QuoteCount > 0)
+    {
+        <span class="badge badge-pill badge-secondary">🗩 @Model.Data.QuoteCount</span>
+    }
+    @if (Model.Data.CreatedBy.Verified)
+    {
+        <span class="indicator-verified">☑</span>
+    }
+    <a href="https://twitter.com/@Model.Data.CreatedBy.ScreenName/" title="@Model.Data.CreatedBy.Description">@Model.Data.CreatedBy.Name</a>
+    <a class="badge badge-light" href="@Model.Data.Url">@Model.Data.CreatedAt</a>
+</div>
+
+@if (Model.Data.Media != null)
+{
+    <div class="section-media">
+        @foreach (var media in Model.Data.Media)
+        {
+            <div class="mediaitem">
+                @switch (media.MediaType)
+                {
+                    case "photo":
+                        <img src="@media.MediaURLHttps"/>
+                        break;
+
+                    case "video":
+                    case "animated_gif":
+                        var variant = media.VideoDetails.Variants.OrderByDescending(v => v.Bitrate).First();
+                        <video src="@variant.URL" controls="controls" preload="none" poster="@media.MediaURLHttps"/>
+                        break;
+
+                    default:
+                        <span>Unsupported media type <code>@media.MediaType</code>: @media.URL</span>
+                        break;
+                }
+            </div>
+        }
+    </div>
+}

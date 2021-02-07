@@ -1,0 +1,11 @@
+@using Microsoft.AspNetCore.Routing
+@model Tweetinvi.Exceptions.TwitterException
+
+@{
+    ViewBag.Title = "Tweet not available";
+    Layout = "_Layout";
+}
+
+<h2>Tweet not available</h2>
+
+<p>Unable to read the requested tweet. The tweet might have been deleted or never existed. Try to take a look at <a href="https://twitter.com/unknown/status/@ViewContext.RouteData.Values["id"]">Twitter web</a>.</p>

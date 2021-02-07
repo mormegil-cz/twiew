@@ -1,0 +1,21 @@
+﻿@model Tweetinvi.Models.ITweet[]
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">TWIEW</h1>
+    <p>Simple no-nonsense plain-HTML Tweet viewer.</p>
+    <p>
+        <a class="btn btn-dark" asp-action="Trending">Trending topics</a>
+    </p>
+</div>
+
+<ul class="list-group">
+    @foreach (var tweet in Model)
+    {
+        <li class="list-group-item">
+            <a asp-controller="Tweet" asp-action="Detail" asp-route-id="@tweet.Id">@tweet.CreatedBy.ScreenName</a>
+        </li>
+    }
+</ul>
