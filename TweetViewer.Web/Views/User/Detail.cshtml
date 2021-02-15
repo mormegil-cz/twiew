@@ -1,0 +1,37 @@
+@model List<TweetViewer.Models.Tweet>
+
+@{
+    var userName = ViewContext.RouteData.Values["id"];
+    ViewBag.Title = "Tweets by " + userName;
+    Layout = "_Layout";
+}
+
+<h2>Tweets by @userName</h2>
+
+@foreach (var tweet in Model)
+{
+    <div class="media">
+        <div class="media-body">
+            <h5 class="mt-0">
+                <a asp-controller="Tweet" asp-action="Detail" asp-route-id="@tweet.Data.IdStr">@tweet.Data.CreatedAt</a>
+                @if (tweet.Data.FavoriteCount > 0)
+                {
+                    <span class="badge badge-pill badge-secondary">♥ @tweet.Data.FavoriteCount</span>
+                }
+                @if (tweet.Data.RetweetCount > 0)
+                {
+                    <span class="badge badge-pill badge-secondary">⇆ @tweet.Data.RetweetCount</span>
+                }
+                @if (tweet.Data.ReplyCount > 0)
+                {
+                    <span class="badge badge-pill badge-secondary">⤶ @tweet.Data.ReplyCount</span>
+                }
+                @if (tweet.Data.QuoteCount > 0)
+                {
+                    <span class="badge badge-pill badge-secondary">🗩 @tweet.Data.QuoteCount</span>
+                }
+            </h5>
+            <p>@tweet.Data.Text</p>
+        </div>
+    </div>
+}

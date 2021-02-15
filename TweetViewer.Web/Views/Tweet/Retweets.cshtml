@@ -1,12 +1,11 @@
-﻿@model Tweetinvi.Models.ITweet[]
+@model Tweetinvi.Models.ITweet[]
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Retweets of a tweet";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">TWIEW</h1>
-    <p>Simple no-nonsense plain-HTML Tweet viewer.</p>
-</div>
+<h2>Retweets of <a asp-action="Detail" asp-route-id="@ViewContext.RouteData.Values["id"]">a tweet</a></h2>
 
 @foreach (var tweet in Model)
 {

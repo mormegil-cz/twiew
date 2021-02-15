@@ -29,5 +29,19 @@ namespace TweetViewer.Controllers
             }
             return View(new Tweet(tweet));
         }
+
+        public async Task<IActionResult> Retweets(string id)
+        {
+            ITweet[] retweets;
+            try
+            {
+                retweets = await twitterClient.Tweets.GetRetweetsAsync(long.Parse(id));
+            }
+            catch (TwitterException e)
+            {
+                return View("TweetError", e);
+            }
+            return View(retweets);
+        }
     }
 }

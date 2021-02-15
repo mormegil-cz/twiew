@@ -73,6 +73,22 @@ namespace TweetViewer
                         action = "Detail"
                     });
                 endpoints.MapControllerRoute(
+                    name: "tweetRetweets",
+                    pattern: "tweet/{id}/retweets",
+                    new
+                    {
+                        controller = "Tweet",
+                        action = "Retweets"
+                    });
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "user/{id}",
+                    new
+                    {
+                        controller = "User",
+                        action = "Detail"
+                    });
+                endpoints.MapControllerRoute(
                     name: "root",
                     pattern: "",
                     new
@@ -82,7 +98,7 @@ namespace TweetViewer
                     });
                 endpoints.MapControllerRoute(
                     name: "otherControllers",
-                    pattern: "{controller}/{action}"
+                    pattern: "{controller}/{action}/{id?}"
                 );
             });
         }

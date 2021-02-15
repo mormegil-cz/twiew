@@ -1,0 +1,10 @@
+@model Tweetinvi.Exceptions.TwitterException
+
+@{
+    ViewBag.Title = "User not available";
+    Layout = "_Layout";
+}
+
+<h2>Tweets of the user not available</h2>
+
+<p>Unable to read the requested tweets. The user might have been deleted or never existed. Try to take a look at <a href="https://twitter.com/@ViewContext.RouteData.Values["id"]">Twitter web</a>.</p>

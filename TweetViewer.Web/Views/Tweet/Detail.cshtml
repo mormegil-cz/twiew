@@ -38,9 +38,11 @@
                 <a class="piece-hashtag" href="https://twitter.com/hashtag/@(piece.Text.Substring(1))">@piece.Text</a>
                 break;
             case PieceType.Mention:
-                var mentionPiece = (TextPiece<IUserMentionEntity>) piece;
-                <a class="piece-mention" href="https://twitter.com/@(mentionPiece.AdditionalData!.ScreenName)">@piece.Text</a>
-                break;
+                {
+                    var mentionPiece = (TextPiece<IUserMentionEntity>) piece;
+                    <a class="piece-mention" asp-controller="User" asp-action="Detail" asp-route-id="@mentionPiece.AdditionalData!.ScreenName">@piece.Text</a>
+                    break;
+                }
             case PieceType.Url:
                 var urlPiece = (TextPiece<IUrlEntity>) piece;
                 <a class="piece-url" href="@urlPiece.AdditionalData!.ExpandedURL">@urlPiece.AdditionalData.DisplayedURL</a>
@@ -61,7 +63,7 @@
     }
     @if (Model.Data.RetweetCount > 0)
     {
-        <span class="badge badge-pill badge-secondary">⇆ @Model.Data.RetweetCount</span>
+        <a asp-action="Retweets" asp-route-id="@(Model.Data.IsRetweet ? Model.Data.RetweetedTweet.IdStr : Model.Data.IdStr)"><span class="badge badge-pill badge-secondary">⇆ @Model.Data.RetweetCount</span></a>
     }
     @if (Model.Data.ReplyCount > 0)
     {
@@ -75,7 +77,7 @@
     {
         <span class="indicator-verified">☑</span>
     }
-    <a href="https://twitter.com/@Model.Data.CreatedBy.ScreenName/" title="@Model.Data.CreatedBy.Description">@Model.Data.CreatedBy.Name</a>
+    <a asp-controller="User" asp-action="Detail" asp-route-id="@Model.Data.CreatedBy.ScreenName" title="@Model.Data.CreatedBy.Description">@Model.Data.CreatedBy.Name</a>
     <a class="badge badge-light" href="@Model.Data.Url">@Model.Data.CreatedAt</a>
 </div>
 
