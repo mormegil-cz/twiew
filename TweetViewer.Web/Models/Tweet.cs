@@ -30,7 +30,7 @@ namespace TweetViewer.Models
                 return lang == null ? null : languageCodes[lang.GetValueOrDefault()];
             }
         }
-        
+
         private static IList<TextPiece> ParseTextPieces(ITweet data)
         {
             var tweetText = data.FullText;
@@ -66,6 +66,11 @@ namespace TweetViewer.Models
                 // var mediaPiece = new TextPiece<IMediaEntity> { Text = tweetText.Substring(start, end - start), Start = start, End = end, Type = PieceType.Media, AdditionalData = media };
                 // media are not inserted into text, are shown separately below
                 SplitFragment(fragments, start, end, null);
+                if (fragments.Count == 0)
+                {
+                    // ugly hack for Tweets containing _only_ medias (with repeated (?) entries in the Media collection)
+                    break;
+                }
             }
 
             return fragments;
@@ -107,7 +112,7 @@ namespace TweetViewer.Models
                 fragments.Insert(index, matchingFragment.Split(end, matchingFragment.End));
             }
         }
- 
+
         private static Dictionary<Language, string> BuildLanguageCodes()
         {
             var members = typeof(Language).GetMembers(BindingFlags.Public | BindingFlags.Static);
